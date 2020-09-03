@@ -1,3 +1,5 @@
+package com.internet.shop;
+
 import com.internet.shop.library.Injector;
 import com.internet.shop.model.Product;
 import com.internet.shop.service.ProductService;
@@ -25,6 +27,11 @@ public class Application {
         productService.update(lemon);
 
         System.out.println("After changes");
+        productService.getAll().forEach(System.out::println);
+
+        System.out.println(productService.get(banana.getId()));
+
+        productService.delete(orange.getId());
         productService.getAll().forEach(System.out::println);
 
     }
