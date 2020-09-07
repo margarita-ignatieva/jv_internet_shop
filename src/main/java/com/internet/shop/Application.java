@@ -1,6 +1,7 @@
 package com.internet.shop;
 
 import com.internet.shop.library.Injector;
+import com.internet.shop.model.Order;
 import com.internet.shop.model.Product;
 import com.internet.shop.model.ShoppingCart;
 import com.internet.shop.model.User;
@@ -8,6 +9,7 @@ import com.internet.shop.service.OrderService;
 import com.internet.shop.service.ProductService;
 import com.internet.shop.service.ShoppingCartService;
 import com.internet.shop.service.UserService;
+import com.internet.shop.storage.Storage;
 
 import java.util.List;
 
@@ -30,72 +32,8 @@ public class Application {
         productService.create(orange);
         productService.create(lemon);
 
-        User user1 = new User("Joe", "jor_hann", "meteora");
-        User user2 = new User("Chester", "tim_benning", "hybrid");
-        User user3 = new User("Mike", "mike_shinoda", "numb");
-        userService.create(user1);
-        userService.create(user2);
-        userService.create(user3);
-
-        ShoppingCart shoppingCartUser1 = new ShoppingCart(user1.getUserId());
-        ShoppingCart shoppingCartUser2 = new ShoppingCart(user2.getUserId());
-        ShoppingCart shoppingCartUser3 = new ShoppingCart(user3.getUserId());
-        ShoppingCart shoppingCartUser2new = new ShoppingCart(user2.getUserId());
-        shoppingCartService.create(shoppingCartUser1);
-        shoppingCartService.create(shoppingCartUser3);
-        shoppingCartService.create(shoppingCartUser2);
-        shoppingCartService.create(shoppingCartUser2new);
-
-        System.out.println("Add Product to Cart:");
-        shoppingCartService.addProduct(shoppingCartUser1, playStation);
-        shoppingCartService.addProduct(shoppingCartUser1, xbox);
-        shoppingCartService.addProduct(shoppingCartUser1, nintendo);
-        shoppingCartService.addProduct(shoppingCartUser2, tetris);
-        shoppingCartService.addProduct(shoppingCartUser2, sega);
-        shoppingCartService.addProduct(shoppingCartUser3, sega);
-        shoppingCartService.addProduct(shoppingCartUser3, dendy);
-        shoppingCartService.addProduct(shoppingCartUser3, subor);
-        shoppingCartService.addProduct(shoppingCartUser2new, playStation);
-        Storage.shoppingCarts.forEach(System.out::println);
-
-        System.out.println("Delete xbox from Cart#1:");
-        shoppingCartService.deleteProduct(shoppingCartUser1, xbox);
-        Storage.shoppingCarts.forEach(System.out::println);
-
-        System.out.println("get ID by User#3");
-        System.out.println(shoppingCartService.getByUserId(user3.getId()));
-
-        System.out.println("delete Cart ID #2");
-        shoppingCartService.delete(shoppingCartUser3);
-        Storage.shoppingCarts.forEach(System.out::println);
-
-        System.out.println("Clear all product by Cart#1");
-        shoppingCartService.clear(shoppingCartUser1);
-        Storage.shoppingCarts.forEach(System.out::println);
-
-        System.out.println("complete order User#2");
-        orderService.completeOrder(shoppingCartUser2);
-        orderService.completeOrder(shoppingCartUser2new);
-        Storage.orders.forEach(System.out::println);
-        Storage.shoppingCarts.forEach(System.out::println);
-
-        System.out.println("get User#2 orders");
-        System.out.println(orderService.getUserOrders(user2.getId()));
-
-        System.out.println("get User#2 order by ID");
-        System.out.println(orderService.get(user2.getId()));
-
-        System.out.println("get All orders");
-        orderService.getAll();
-        Storage.orders.forEach(System.out::println);
-        List<Product> products = productService.getAll();
-
-        System.out.println("del order by ID");
-        orderService.delete(user2.getId());
-        Storage.orders.forEach(System.out::println);
-
         System.out.println("Before changes");
-        products.forEach(System.out::println);
+        Storage.products.forEach(System.out::println);
         lemon.setName("plump");
         lemon.setPrice(3);
         productService.update(lemon);
@@ -108,5 +46,79 @@ public class Application {
         productService.delete(orange.getId());
         productService.getAll().forEach(System.out::println);
 
+        System.out.println("Before changes: user list");
+
+        User userJoe = new User("Joe", "joe_hann", "meteora");
+        User userChes = new User("Chester", "ches_benning", "hybrid");
+        User userMike = new User("Mike", "mike_shinoda", "numb");
+        userService.create(userJoe );
+        userService.create(userChes);
+        userService.create(userMike);
+
+        userService.getAll().forEach(System.out::println);
+
+        User userFeniks =
+                new User("Feniks", "feniks_smith", "guitar");
+        userFeniks.setUserId(userMike.getUserId());
+        userService.update(userFeniks);
+        userService.getAll().forEach(System.out::println);
+
+        userService.delete(userChes.getUserId());
+        userService.getAll().forEach(System.out::println);
+
+        ShoppingCart shoppingCartUserFeniks = new ShoppingCart(userFeniks.getUserId());
+        ShoppingCart shoppingCartUserJoe = new ShoppingCart(userJoe.getUserId());
+        shoppingCartService.create(shoppingCartUserFeniks);
+        shoppingCartService.create(shoppingCartUserJoe);
+
+        System.out.println("Add Product to Cart:");
+        shoppingCartService.addProduct(shoppingCartUserFeniks, lemon);
+        shoppingCartService.addProduct(shoppingCartUserFeniks, lemon);
+        shoppingCartService.addProduct(shoppingCartUserFeniks, banana);
+        shoppingCartService.addProduct(shoppingCartUserJoe, orange);
+        shoppingCartService.addProduct(shoppingCartUserJoe, banana);
+        shoppingCartService.addProduct(shoppingCartUserJoe, orange);
+        Storage.shoppingCarts.forEach(System.out::println);
+
+        System.out.println("Delete banana from first Cart:");
+        shoppingCartService.deleteProduct(shoppingCartUserFeniks, banana);
+        Storage.shoppingCarts.forEach(System.out::println);
+
+        System.out.println("Get User Feniks ID");
+        System.out.println(shoppingCartService.getByUserId(userFeniks.getUserId()));
+
+        System.out.println("Delete first Cart by ID");
+        shoppingCartService.deleteCart(shoppingCartUserFeniks);
+        Storage.shoppingCarts.forEach(System.out::println);
+
+        System.out.println("New Cart added");
+        ShoppingCart shoppingCartUserMike = new ShoppingCart(userMike.getUserId());
+        shoppingCartService.create(shoppingCartUserMike);
+        shoppingCartService.addProduct(shoppingCartUserMike, lemon);
+        shoppingCartService.addProduct(shoppingCartUserMike, lemon);
+        shoppingCartService.addProduct(shoppingCartUserMike, banana);
+        Storage.shoppingCarts.forEach(System.out::println);
+
+        System.out.println("Clear all products in Mikes's Cart");
+        shoppingCartService.clear(shoppingCartUserMike);
+        Storage.shoppingCarts.forEach(System.out::println);
+
+        System.out.println("Complete orders for User Feniks and Joe");
+        Order firstOrder = orderService.completeOrder(shoppingCartUserFeniks);
+        Order secondOrder = orderService.completeOrder(shoppingCartUserJoe);
+        Storage.orders.forEach(System.out::println);
+        Storage.shoppingCarts.forEach(System.out::println);
+
+        System.out.println("Get User Joe orders");
+        System.out.println(orderService.getUsersOrders(userJoe.getUserId()));
+
+        System.out.println("Get All orders");
+        orderService.getAll();
+        Storage.orders.forEach(System.out::println);
+        List<Product> products = productService.getAll();
+
+        System.out.println("Delete first order");
+        orderService.deleteById(firstOrder.getId());
+        Storage.orders.forEach(System.out::println);
     }
 }
