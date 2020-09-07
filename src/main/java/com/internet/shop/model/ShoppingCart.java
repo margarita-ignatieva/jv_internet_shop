@@ -36,4 +36,13 @@ public class ShoppingCart {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
+
+    @Override
+    public String toString() {
+        return "ShoppingCart{"
+                + "id=" + id
+                + ", userId=" + userId
+                + ", products=" + products
+                + '}';
+    }
 }
