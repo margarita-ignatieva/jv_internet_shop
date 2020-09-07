@@ -1,6 +1,5 @@
 package com.internet.shop.service.impl;
 
-import com.internet.shop.dao.ProductDao;
 import com.internet.shop.dao.ShoppingCartDao;
 import com.internet.shop.library.Inject;
 import com.internet.shop.library.Service;
@@ -13,9 +12,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Inject
     private ShoppingCartDao shoppingCartDao;
-
-    @Inject
-    private ProductDao productDao;
 
     @Override
     public ShoppingCart create(ShoppingCart shoppingCart) {

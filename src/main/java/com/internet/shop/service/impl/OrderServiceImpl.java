@@ -20,10 +20,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order completeOrder(ShoppingCart shoppingCart) {
-        Order order = orderDao.create(new Order(shoppingCart.getUserId()));
+        Order order = new Order(shoppingCart.getUserId());
         order.setProducts(List.copyOf(shoppingCart.getProducts()));
         shoppingCartService.clear(shoppingCart);
-        return order;
+        return orderDao.create(order);
     }
 
     @Override
