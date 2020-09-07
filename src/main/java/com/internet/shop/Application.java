@@ -10,19 +10,18 @@ import com.internet.shop.service.ProductService;
 import com.internet.shop.service.ShoppingCartService;
 import com.internet.shop.service.UserService;
 import com.internet.shop.storage.Storage;
-
 import java.util.List;
 
 public class Application {
     private static final Injector injector = Injector.getInstance("com.internet.shop");
 
     public static void main(String[] args) {
-        ProductService productService = (ProductService)
+        final ProductService productService = (ProductService)
                 injector.getInstance(ProductService.class);
-        ShoppingCartService shoppingCartService =
+        final ShoppingCartService shoppingCartService =
                 (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
-        UserService userService = (UserService) injector.getInstance(UserService.class);
-        OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
+        final UserService userService = (UserService) injector.getInstance(UserService.class);
+        final OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
 
         Product banana = new Product("banana", 10.1);
         Product orange = new Product("orange", 4.1);
@@ -51,7 +50,7 @@ public class Application {
         User userJoe = new User("Joe", "joe_hann", "meteora");
         User userChes = new User("Chester", "ches_benning", "hybrid");
         User userMike = new User("Mike", "mike_shinoda", "numb");
-        userService.create(userJoe );
+        userService.create(userJoe);
         userService.create(userChes);
         userService.create(userMike);
 
@@ -104,8 +103,8 @@ public class Application {
         Storage.shoppingCarts.forEach(System.out::println);
 
         System.out.println("Complete orders for User Feniks and Joe");
-        Order firstOrder = orderService.completeOrder(shoppingCartUserFeniks);
-        Order secondOrder = orderService.completeOrder(shoppingCartUserJoe);
+        final Order firstOrder = orderService.completeOrder(shoppingCartUserFeniks);
+        final Order secondOrder = orderService.completeOrder(shoppingCartUserJoe);
         Storage.orders.forEach(System.out::println);
         Storage.shoppingCarts.forEach(System.out::println);
 

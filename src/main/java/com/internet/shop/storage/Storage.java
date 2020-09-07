@@ -9,12 +9,12 @@ import java.util.List;
 
 public class Storage {
     public static final List<Product> products = new ArrayList<>();
-    private static Long productId = 0L;
     public static final List<Order> orders = new ArrayList<>();
-    private static Long orderId = 0L;
     public static final List<User> users = new ArrayList<>();
-    private static Long userId = 0L;
     public static final List<ShoppingCart> shoppingCarts = new ArrayList<>();
+    private static Long productId = 0L;
+    private static Long orderId = 0L;
+    private static Long userId = 0L;
     private static Long shoppingCartId = 0L;
 
     public static void addProduct(Product product) {

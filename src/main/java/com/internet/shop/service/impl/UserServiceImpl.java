@@ -5,7 +5,6 @@ import com.internet.shop.library.Inject;
 import com.internet.shop.library.Service;
 import com.internet.shop.model.User;
 import com.internet.shop.service.UserService;
-
 import java.util.List;
 
 @Service
