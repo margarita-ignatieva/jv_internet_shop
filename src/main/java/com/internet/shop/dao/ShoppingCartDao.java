@@ -2,12 +2,12 @@ package com.internet.shop.dao;
 
 import com.internet.shop.model.ShoppingCart;
 
+import java.util.Optional;
+
 public interface ShoppingCartDao {
     ShoppingCart create(ShoppingCart shoppingCart);
 
-    void clear(ShoppingCart shoppingCart);
-
-    ShoppingCart getByUserId(Long userId);
+    Optional<ShoppingCart> getByUserId(Long userId);
 
     boolean delete(ShoppingCart shoppingCart);
 
