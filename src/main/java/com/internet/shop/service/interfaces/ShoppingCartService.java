@@ -12,6 +12,4 @@ public interface ShoppingCartService extends GenericService<ShoppingCart, Long> 
     void clear(ShoppingCart shoppingCart);
 
     boolean deleteProduct(ShoppingCart shoppingCart, Product product);
-
-    boolean deleteCart(ShoppingCart shoppingCart);
 }

@@ -87,7 +87,6 @@ public class Application {
         System.out.println(shoppingCartService.getByUserId(userFeniks.getUserId()));
 
         System.out.println("Delete first Cart by ID");
-        shoppingCartService.deleteCart(shoppingCartUserFeniks);
         Storage.shoppingCarts.forEach(System.out::println);
 
         System.out.println("New Cart added");
