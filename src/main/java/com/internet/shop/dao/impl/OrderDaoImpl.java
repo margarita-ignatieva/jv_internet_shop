@@ -7,6 +7,7 @@ import com.internet.shop.storage.Storage;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Dao
 public class OrderDaoImpl implements OrderDao {
@@ -34,6 +35,14 @@ public class OrderDaoImpl implements OrderDao {
         return Storage.orders.stream()
                 .filter(order -> order.getUserId().equals(userId))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Order update(Order order) {
+        IntStream.range(0, Storage.orders.size())
+                .filter(i -> Storage.orders.get(i).getId().equals(order.getId()))
+                .forEach(i -> Storage.orders.set(i, order));
+        return order;
     }
 
     @Override

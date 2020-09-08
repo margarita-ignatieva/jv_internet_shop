@@ -117,7 +117,7 @@ public class Application {
         List<Product> products = productService.getAll();
 
         System.out.println("Delete first order");
-        orderService.deleteById(firstOrder.getId());
+        orderService.delete(firstOrder.getId());
         Storage.orders.forEach(System.out::println);
     }
 }
