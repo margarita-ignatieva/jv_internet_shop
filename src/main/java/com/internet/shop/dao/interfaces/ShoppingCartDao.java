@@ -1,5 +1,6 @@
-package com.internet.shop.dao;
+package com.internet.shop.dao.interfaces;
 
+import com.internet.shop.dao.GenericDao;
 import com.internet.shop.model.ShoppingCart;
 import java.util.Optional;
 

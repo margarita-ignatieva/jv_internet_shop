@@ -1,6 +1,6 @@
 package com.internet.shop.dao.impl;
 
-import com.internet.shop.dao.OrderDao;
+import com.internet.shop.dao.interfaces.OrderDao;
 import com.internet.shop.library.Dao;
 import com.internet.shop.model.Order;
 import com.internet.shop.storage.Storage;
