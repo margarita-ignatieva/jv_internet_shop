@@ -5,10 +5,10 @@ import com.internet.shop.model.Order;
 import com.internet.shop.model.Product;
 import com.internet.shop.model.ShoppingCart;
 import com.internet.shop.model.User;
-import com.internet.shop.service.OrderService;
-import com.internet.shop.service.ProductService;
-import com.internet.shop.service.ShoppingCartService;
-import com.internet.shop.service.UserService;
+import com.internet.shop.service.interfaces.OrderService;
+import com.internet.shop.service.interfaces.ProductService;
+import com.internet.shop.service.interfaces.ShoppingCartService;
+import com.internet.shop.service.interfaces.UserService;
 import com.internet.shop.storage.Storage;
 import java.util.List;
 
@@ -87,7 +87,6 @@ public class Application {
         System.out.println(shoppingCartService.getByUserId(userFeniks.getUserId()));
 
         System.out.println("Delete first Cart by ID");
-        shoppingCartService.deleteCart(shoppingCartUserFeniks);
         Storage.shoppingCarts.forEach(System.out::println);
 
         System.out.println("New Cart added");
@@ -117,7 +116,7 @@ public class Application {
         List<Product> products = productService.getAll();
 
         System.out.println("Delete first order");
-        orderService.deleteById(firstOrder.getId());
+        orderService.delete(firstOrder.getId());
         Storage.orders.forEach(System.out::println);
     }
 }
