@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public class DeleteUserController extends HttpServlet {
     private static final Injector injector = Injector.getInstance("com.internet.shop");
-    private final UserService userService = (UserService) injector.getInstance(UserService.class);
-    private final ShoppingCartService shoppingCartService =
+    private UserService userService = (UserService) injector.getInstance(UserService.class);
+    private ShoppingCartService shoppingCartService =
             (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
 
     @Override

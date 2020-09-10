@@ -2,30 +2,31 @@ package com.internet.shop.controllers;
 
 import com.internet.shop.library.Injector;
 import com.internet.shop.model.Product;
-import com.internet.shop.model.ShoppingCart;
 import com.internet.shop.service.interfaces.ProductService;
-import com.internet.shop.service.interfaces.ShoppingCartService;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class CartProductAddingController extends HttpServlet {
-    private static final long USER_ID = 1;
+public class AddProductController extends HttpServlet {
     private static final Injector injector = Injector.getInstance("com.internet.shop");
     private ProductService productService =
             (ProductService) injector.getInstance(ProductService.class);
-    private ShoppingCartService shoppingCartService
-            = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        ShoppingCart shoppingCart = shoppingCartService.getByUserId(USER_ID);
-        String productId = req.getParameter("productId");
-        Product currentProduct = productService.get(Long.valueOf(productId));
-        shoppingCartService.addProduct(shoppingCart, currentProduct);
-        resp.sendRedirect(req.getContextPath() + "/product/all");
+        req.getRequestDispatcher("/WEB-INF/views/product/adding.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        String name = req.getParameter("name");
+        String price = req.getParameter("price");
+        productService.create(new Product(name, Double.parseDouble(price)));
+        req.setAttribute("products", productService.getAll());
+        req.getRequestDispatcher("/WEB-INF/views/product/all.jsp").forward(req, resp);
     }
 }
