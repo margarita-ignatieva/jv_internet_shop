@@ -6,7 +6,7 @@
     <title>Title</title>
 </head>
 <h1>
-    <b:menuitem>All users</b:menuitem>
+    <b:menuitem>All products</b:menuitem>
 </h1>
 
 <body>
