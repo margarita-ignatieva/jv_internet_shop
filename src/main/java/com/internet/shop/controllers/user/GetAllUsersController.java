@@ -1,4 +1,4 @@
-package com.internet.shop.controllers;
+package com.internet.shop.controllers.user;
 
 import com.internet.shop.library.Injector;
 import com.internet.shop.service.interfaces.UserService;
