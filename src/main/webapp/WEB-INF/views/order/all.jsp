@@ -11,19 +11,19 @@
     <p>id = ${order.id} userId = ${order.userId}</p>
     <table border="1">
         <tr>
-            <th>id</th>
             <th>name</th>
-            <th>price</th>
         </tr>
         <c:forEach var="product" items="${order.products}">
             <tr>
-                <td>${product.id}</td>
                 <td>${product.name}</td>
-                <td>${product.price}</td>
             </tr>
         </c:forEach>
         <a href="${pageContext.request.contextPath}/orders/delete?orderId=${order.id}">delete</a>
     </table>
 </c:forEach>
+<form>
+    <input type="button" value="Order details"
+           onClick='location.href="${pageContext.request.contextPath}/order/details"'>
+</form>
 </body>
 </html>

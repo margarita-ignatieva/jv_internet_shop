@@ -8,22 +8,22 @@
 <h2>Your orders</h2>
 <a href="${pageContext.request.contextPath}/main"> Fruit store </a>
 <table border="1">
- <c:forEach var="order" items="${orders}">
-     <table border="1">
-         <tr>
-             <th>id</th>
-             <th>name</th>
-             <th>price</th>
-         </tr>
-         <c:forEach var="product" items="${order.products}">
-             <tr>
-                 <td>${product.id}</td>
-                 <td>${product.name}</td>
-                 <td>${product.price}</td>
-             </tr>
-         </c:forEach>
-     </table>
-</c:forEach>
+    <tr>
+        <th>Order id</th>
+    </tr>
+
+    <c:forEach var="order" items="${orders}">
+        <tr>
+            <td>
+                <c:out value="${order.orderId}"/>
+            </td>
+            <td>
+                <a href="${pageContext.request.contextPath}/order/details?id=${order.orderId}">Order details</a>
+            </td>
+        </tr>
+    </c:forEach>
+
 </table>
+<a href = "${pageContext.request.contextPath}/main"> Fruit store </a>
 </body>
 </html>
