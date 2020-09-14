@@ -34,6 +34,6 @@
 </form>
 <br>
 <br>
-<a href = "${pageContext.request.contextPath}/main"> Main Menu </a>
+<a href = "${pageContext.request.contextPath}/main"> Fruit store </a>
 </body>
 </html>

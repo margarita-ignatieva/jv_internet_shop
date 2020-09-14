@@ -10,6 +10,6 @@
     <p>Enter product price : <input type="text" name="price"></p>
     <button type="submit">Save product</button>
 </form>
-<a href = "${pageContext.request.contextPath}/"> Go Back </a>
+<a href = "${pageContext.request.contextPath}/main"> Go Back </a>
 </body>
 </html>

@@ -6,21 +6,24 @@
 </head>
 <body>
 <h2>Your orders</h2>
+<a href="${pageContext.request.contextPath}/main"> Fruit store </a>
 <table border="1">
-    <tr>
-        <th>ID</th>
-    </tr>
-    <c:forEach var="order" items="${orders}">
-        <tr>
-            <td>
-                <c:out value="${order.id}"/>
-            </td>
-            <td>
-                <a href="${pageContext.request.contextPath}
-                /orders/order?id=${order.id}">order details</a>
-            </td>
-        </tr>
-    </c:forEach>
+ <c:forEach var="order" items="${orders}">
+     <table border="1">
+         <tr>
+             <th>id</th>
+             <th>name</th>
+             <th>price</th>
+         </tr>
+         <c:forEach var="product" items="${order.products}">
+             <tr>
+                 <td>${product.id}</td>
+                 <td>${product.name}</td>
+                 <td>${product.price}</td>
+             </tr>
+         </c:forEach>
+     </table>
+</c:forEach>
 </table>
 </body>
 </html>

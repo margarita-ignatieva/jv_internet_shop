@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>Orders</h2>
-<a href="${pageContext.request.contextPath}/">Fruit store</a>
+<a href = "${pageContext.request.contextPath}/main"> Fruit store </a>
 <c:forEach var="order" items="${orders}">
     <p>id = ${order.id} userId = ${order.userId}</p>
     <table border="1">

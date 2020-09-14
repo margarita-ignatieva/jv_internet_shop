@@ -20,6 +20,6 @@ public class GetUserOrdersController extends HttpServlet {
             throws ServletException, IOException {
         List<Order> orders = orderService.getUsersOrders(USER_ID);
         req.setAttribute("orders", orders);
-        req.getRequestDispatcher("/WEB-INF/view/order/userOrders.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/order/userOrders.jsp").forward(req, resp);
     }
 }

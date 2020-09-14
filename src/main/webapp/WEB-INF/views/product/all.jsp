@@ -1,14 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="b" uri="http://bootstrapjsp.org/" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
 </head>
-<h1>
-    <b:menuitem>All users</b:menuitem>
-</h1>
-
 <body>
 <table border= "2">
     <tr>
@@ -27,7 +22,7 @@
                 <c:out value="${product.price}"/>
             </td>
             <td>
-                <a href = "${pageContext.request.contextPath}/products/add?id=${product.id}"> Buy </a>
+                <a href = "${pageContext.request.contextPath}/product/add?id=${product.id}"> Buy </a>
             </td>
         </tr>
     </c:forEach>
