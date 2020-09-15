@@ -7,8 +7,9 @@
 <h5>${time}</h5>
 <h1>Are you ready for the order?</h1>
 <h2> Select button for redirection. </h2>
-<a href = "${pageContext.request.contextPath}/users/all"> All Users </a>
-<a href = "${pageContext.request.contextPath}/products/all"> All Products </a>
-<a href = "${pageContext.request.contextPath}/cart"> Shopping Cart </a>
+<a href = "${pageContext.request.contextPath}/user/all"> All Users </a>
+<a href = "${pageContext.request.contextPath}/product/all"> All Products </a>
+<a href = "${pageContext.request.contextPath}/shopping-cart/products"> Shopping Cart </a>
+<a href = "${pageContext.request.contextPath}/orders"> All orders </a>
 </body>
 </html>

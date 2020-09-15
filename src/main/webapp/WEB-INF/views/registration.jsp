@@ -29,6 +29,6 @@
 </form>
 <br>
 <br>
-<a href = "${pageContext.request.contextPath}/"> Go Back </a>
+<a href = "${pageContext.request.contextPath}/main"> Go Back </a>
 </body>
 </html>

@@ -1,23 +1,22 @@
-package com.internet.shop.controllers;
+package com.internet.shop.controllers.order;
 
 import com.internet.shop.library.Injector;
-import com.internet.shop.service.interfaces.UserService;
+import com.internet.shop.service.interfaces.OrderService;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class GetAllUsersController extends HttpServlet {
+public class DeleteOrderController extends HttpServlet {
     private static final Injector injector = Injector.getInstance("com.internet.shop");
-    private UserService userService =
-            (UserService) injector.getInstance(UserService.class);
+    private OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.setAttribute("users", userService.getAll());
-        req.getRequestDispatcher("/WEB-INF/views/user/all.jsp").forward(req, resp);
-
+        Long orderId = Long.parseLong(req.getParameter("orderId"));
+        orderService.delete(orderId);
+        resp.sendRedirect(req.getContextPath() + "/orders");
     }
 }

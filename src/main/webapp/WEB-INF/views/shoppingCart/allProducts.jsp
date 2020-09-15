@@ -24,7 +24,7 @@
                 <c:out value="${product.price}"/>
             </td>
             <td>
-                <a href = "${pageContext.request.contextPath}/cart/delete?id=${product.id}"> Delete </a>
+                <a href = "${pageContext.request.contextPath}/shopping-cart/products/delete?id=${product.id}"> Delete </a>
             </td>
         </tr>
         </c:forEach>
@@ -34,6 +34,6 @@
 </form>
 <br>
 <br>
-<a href = "${pageContext.request.contextPath}/main"> Main Menu </a>
+<a href = "${pageContext.request.contextPath}/main"> Fruit store </a>
 </body>
 </html>
