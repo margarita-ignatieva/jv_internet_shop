@@ -9,7 +9,7 @@
 <h1>Hello!</h1>
 <h2>Please, enter information below.</h2>
 <h4 style = "color: #dc143c"> ${message} </h4>
-<form method = "post" action = "${pageContext.request.contextPath}/registration">
+<form method = "post" action = "${pageContext.request.contextPath}/user/registration">
     <table border = "1">
         <tr>
             <th> Name: </th>
