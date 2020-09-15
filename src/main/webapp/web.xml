@@ -43,14 +43,6 @@
         <url-pattern>/users/delete</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>allProducts</servlet-name>
-        <servlet-class>com.internet.shop.controllers.product.GetAllProductsController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>allProducts</servlet-name>
-        <url-pattern>/products/all</url-pattern>
-    </servlet-mapping>
-    <servlet>
         <servlet-name>buyProduct</servlet-name>
         <servlet-class>com.internet.shop.controllers.cart.AddProductToCartController</servlet-class>
     </servlet>
@@ -84,6 +76,15 @@
     <servlet-mapping>
         <servlet-name>addProduct</servlet-name>
         <url-pattern>/products/add</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>allProductsAdmin</servlet-name>
+        <servlet-class>com.internet.shop.controllers.product.ManageProductsController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>allProductsAdmin</servlet-name>
+        <url-pattern>/products/admin</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>getUserOrders</servlet-name>

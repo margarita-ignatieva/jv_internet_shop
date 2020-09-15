@@ -27,6 +27,6 @@ public class AddProductController extends HttpServlet {
         String price = req.getParameter("price");
         productService.create(new Product(name, Double.parseDouble(price)));
         req.setAttribute("products", productService.getAll());
-        req.getRequestDispatcher("/WEB-INF/views/product/all.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/product/adminAll.jsp").forward(req, resp);
     }
 }
