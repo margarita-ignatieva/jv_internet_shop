@@ -87,6 +87,15 @@
         <url-pattern>/products/admin</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>allProducts</servlet-name>
+        <servlet-class>com.internet.shop.controllers.product.GetAllProductsController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>allProducts</servlet-name>
+        <url-pattern>/user/products</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>getUserOrders</servlet-name>
         <servlet-class>com.internet.shop.controllers.user.GetUserOrdersController</servlet-class>
     </servlet>
