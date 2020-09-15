@@ -21,7 +21,7 @@
                 <td><c:out value="${order.userId}"/></td>
             </tr>
             <tr>
-                <a href="${pageContext.request.contextPath}/order/details?orderID=${order.id}">details</a>
+                <a href="${pageContext.request.contextPath}/order/details?orderId=${order.id}">details</a>
 
             </tr>
             <tr>
