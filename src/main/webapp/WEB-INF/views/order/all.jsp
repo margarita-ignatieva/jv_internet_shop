@@ -6,24 +6,30 @@
 </head>
 <body>
 <h2>Orders</h2>
-<a href = "${pageContext.request.contextPath}/main"> Fruit store </a>
-<c:forEach var="order" items="${orders}">
-    <p>id = ${order.id} userId = ${order.userId}</p>
     <table border="1">
         <tr>
-            <th>name</th>
+            <th>Order id</th>
+            <th>User id</th>
+            <th>Order details</th>
+            <th>Delete order</th>
         </tr>
-        <c:forEach var="product" items="${order.products}">
+        <c:forEach var="order" items="${orders}">
             <tr>
-                <td>${product.name}</td>
+                <td><c:out value="${order.orderId}"/></td>
+            </tr>
+            <tr>
+                <td><c:out value="${order.userId}"/></td>
+            </tr>
+            <tr>
+                <a href="${pageContext.request.contextPath}/order/details?orderID=${order.id}">details</a>
+
+            </tr>
+            <tr>
+                <a href="${pageContext.request.contextPath}/orders/delete?orderId=${order.id}">delete</a>
             </tr>
         </c:forEach>
-        <a href="${pageContext.request.contextPath}/orders/delete?orderId=${order.id}">delete</a>
+
     </table>
-</c:forEach>
-<form>
-    <input type="button" value="Order details"
-           onClick='location.href="${pageContext.request.contextPath}/order/details"'>
-</form>
+<a href = "${pageContext.request.contextPath}/main"> Fruit store </a>
 </body>
 </html>
