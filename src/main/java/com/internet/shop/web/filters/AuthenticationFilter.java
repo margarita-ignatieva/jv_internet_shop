@@ -19,7 +19,6 @@ public class AuthenticationFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override
@@ -39,11 +38,9 @@ public class AuthenticationFilter implements Filter {
             return;
         }
         filterChain.doFilter(req, resp);
-
     }
 
     @Override
     public void destroy() {
-
     }
 }
