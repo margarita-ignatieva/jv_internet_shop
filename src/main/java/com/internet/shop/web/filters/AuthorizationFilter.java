@@ -17,7 +17,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AuthorisationFilter implements Filter {
+public class AuthorizationFilter implements Filter {
     private static final String USER_ID = "user_id";
     private static final Injector injector = Injector.getInstance("com.internet.shop");
     private UserService userService = (UserService) injector.getInstance(UserService.class);
@@ -27,8 +27,9 @@ public class AuthorisationFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         protectedUrls.put("/order/complete", List.of(Role.RoleName.USER));
         protectedUrls.put("/shopping-cart/product/delete", List.of(Role.RoleName.USER));
-        protectedUrls.put("/orders/manage", List.of(Role.RoleName.USER));
+        protectedUrls.put("/user/orders", List.of(Role.RoleName.USER));
         protectedUrls.put("/orders/delete", List.of(Role.RoleName.USER));
+        protectedUrls.put("/order/details", List.of(Role.RoleName.USER));
         protectedUrls.put("shopping-cart/products/delete", List.of(Role.RoleName.USER));
         protectedUrls.put("/shopping-cart/products/add", List.of(Role.RoleName.USER));
         protectedUrls.put("/products/add", List.of(Role.RoleName.ADMIN));
@@ -65,7 +66,6 @@ public class AuthorisationFilter implements Filter {
 
     @Override
     public void destroy() {
-
     }
 
     private boolean isAuthorized(User user, List<Role.RoleName> authorizedRoles) {

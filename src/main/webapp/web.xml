@@ -172,7 +172,7 @@
 
     <filter>
         <filter-name>authorisationFilter</filter-name>
-        <filter-class>com.internet.shop.web.filters.AuthorisationFilter</filter-class>
+        <filter-class>com.internet.shop.web.filters.AuthorizationFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>authorisationFilter</filter-name>
