@@ -4,20 +4,24 @@ import com.internet.shop.library.Injector;
 import com.internet.shop.model.Role;
 import com.internet.shop.model.User;
 import com.internet.shop.service.interfaces.UserService;
-
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class AuthorisationFilter implements Filter {
-    private Map<String, List<Role.RoleName>> protectedUrls = new HashMap<>();
     private static final String USER_ID = "user_id";
     private static final Injector injector = Injector.getInstance("com.internet.shop");
     private UserService userService = (UserService) injector.getInstance(UserService.class);
+    private Map<String, List<Role.RoleName>> protectedUrls = new HashMap<>();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -63,8 +67,6 @@ public class AuthorisationFilter implements Filter {
             req.getRequestDispatcher("/WEB-INF/views/user/accessDenied.jsp").forward(req, resp);
             return;
         }
-
-
     }
 
     @Override

@@ -9,14 +9,6 @@ public class User {
     private String password;
     private List<Role> roles;
 
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
     public User(String name, String login, String password) {
         this.name = name;
         this.login = login;
@@ -53,6 +45,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
