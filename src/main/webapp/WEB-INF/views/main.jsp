@@ -11,5 +11,6 @@
 <a href = "${pageContext.request.contextPath}/user/products"> All Products </a>
 <a href = "${pageContext.request.contextPath}/shopping-cart/products"> Shopping Cart </a>
 <a href = "${pageContext.request.contextPath}/orders"> All orders </a>
+<a href = "${pageContext.request.contextPath}/logout"> All orders </a>
 </body>
 </html>
