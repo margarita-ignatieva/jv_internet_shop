@@ -54,18 +54,12 @@ public class AuthorisationFilter implements Filter {
         }
 
         Long userId = (Long) req.getSession().getAttribute(USER_ID);
-        if (userId == null || userService.get(userId) == null) {
-            resp.sendRedirect("/login");
-            return;
-        }
         User user = userService.get(userId);
 
         if (isAuthorized(user, protectedUrls.get(requestedUrl))) {
             filterChain.doFilter(req, resp);
-            return;
         } else {
             req.getRequestDispatcher("/WEB-INF/views/user/accessDenied.jsp").forward(req, resp);
-            return;
         }
     }
 

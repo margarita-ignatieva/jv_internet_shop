@@ -5,7 +5,7 @@ import com.internet.shop.model.Role;
 import com.internet.shop.model.User;
 import com.internet.shop.service.interfaces.UserService;
 import java.io.IOException;
-import java.util.List;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +19,11 @@ public class InjectDataController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         User userJoe = new User("Joe", "joe_hann", "meteora");
-        userJoe.setRoles(List.of(Role.of("USER")));
+        userJoe.setRoles(Set.of(Role.of("USER")));
         User userChes = new User("Chester", "ches_benning", "hybrid");
-        userChes.setRoles(List.of(Role.of("USER")));
+        userChes.setRoles(Set.of(Role.of("USER")));
         User admin = new User("Admin", "lp", "admin");
-        admin.setRoles(List.of(Role.of("ADMIN")));
+        admin.setRoles(Set.of(Role.of("ADMIN")));
         userService.create(userJoe);
         userService.create(userChes);
         userService.create(admin);
