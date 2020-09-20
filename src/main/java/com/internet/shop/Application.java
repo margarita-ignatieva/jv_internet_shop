@@ -23,9 +23,9 @@ public class Application {
         final UserService userService = (UserService) injector.getInstance(UserService.class);
         final OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
 
-        Product banana = new Product("banana", 10.1);
-        Product orange = new Product("orange", 4.1);
-        Product lemon = new Product("lemon", 6.3);
+        Product banana = new Product(id, "banana", 10.1);
+        Product orange = new Product(id, "orange", 4.1);
+        Product lemon = new Product(id, "lemon", 6.3);
 
         productService.create(banana);
         productService.create(orange);
