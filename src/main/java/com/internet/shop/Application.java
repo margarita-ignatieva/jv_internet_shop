@@ -1,12 +1,12 @@
 package com.internet.shop;
 
+import com.internet.shop.dao.jdbc.ProductDaoJdbcImpl;
 import com.internet.shop.library.Injector;
 import com.internet.shop.model.Order;
 import com.internet.shop.model.Product;
 import com.internet.shop.model.ShoppingCart;
 import com.internet.shop.model.User;
 import com.internet.shop.service.interfaces.OrderService;
-import com.internet.shop.service.interfaces.ProductService;
 import com.internet.shop.service.interfaces.ShoppingCartService;
 import com.internet.shop.service.interfaces.UserService;
 import com.internet.shop.storage.Storage;
@@ -16,34 +16,28 @@ public class Application {
     private static final Injector injector = Injector.getInstance("com.internet.shop");
 
     public static void main(String[] args) {
-        final ProductService productService = (ProductService)
-                injector.getInstance(ProductService.class);
+        final ProductDaoJdbcImpl productDaoJdbcImpl = new ProductDaoJdbcImpl();
         final ShoppingCartService shoppingCartService =
                 (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
         final UserService userService = (UserService) injector.getInstance(UserService.class);
         final OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
 
-        Product banana = new Product(id, "banana", 10.1);
-        Product orange = new Product(id, "orange", 4.1);
-        Product lemon = new Product(id, "lemon", 6.3);
-
-        productService.create(banana);
-        productService.create(orange);
-        productService.create(lemon);
-
+        Product banana = new Product("banana", 10.1);
+        Product orange = new Product("orange", 4.1);
+        Product lemon = new Product("lemon", 6.3);
         System.out.println("Before changes");
         Storage.products.forEach(System.out::println);
         lemon.setName("plump");
         lemon.setPrice(3);
-        productService.update(lemon);
+        productDaoJdbcImpl.update(lemon);
 
         System.out.println("After changes");
-        productService.getAll().forEach(System.out::println);
+        productDaoJdbcImpl.getAll().forEach(System.out::println);
 
-        System.out.println(productService.get(banana.getId()));
+        System.out.println(productDaoJdbcImpl.get(banana.getId()));
 
-        productService.delete(orange.getId());
-        productService.getAll().forEach(System.out::println);
+        productDaoJdbcImpl.delete(orange.getId());
+        productDaoJdbcImpl.getAll().forEach(System.out::println);
 
         System.out.println("Before changes: user list");
 
@@ -113,7 +107,7 @@ public class Application {
         System.out.println("Get All orders");
         orderService.getAll();
         Storage.orders.forEach(System.out::println);
-        List<Product> products = productService.getAll();
+        List<Product> products = productDaoJdbcImpl.getAll();
 
         System.out.println("Delete first order");
         orderService.delete(firstOrder.getId());
