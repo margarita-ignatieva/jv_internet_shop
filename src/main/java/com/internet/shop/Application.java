@@ -22,20 +22,21 @@ public class Application {
         final UserService userService = (UserService) injector.getInstance(UserService.class);
         final OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
 
-        Product banana = new Product("banana", 10.1);
-        Product orange = new Product("orange", 4.1);
-        Product lemon = new Product("lemon", 6.3);
+        final Product banana = new Product("banana", 10.1);
+        final Product orange = new Product("orange", 4.1);
+        final Product lemon = new Product("lemon", 6.3);
+
         System.out.println("Before changes");
+
         Storage.products.forEach(System.out::println);
         lemon.setName("plump");
         lemon.setPrice(3);
         productDaoJdbcImpl.update(lemon);
 
         System.out.println("After changes");
+
         productDaoJdbcImpl.getAll().forEach(System.out::println);
-
         System.out.println(productDaoJdbcImpl.get(banana.getId()));
-
         productDaoJdbcImpl.delete(orange.getId());
         productDaoJdbcImpl.getAll().forEach(System.out::println);
 
