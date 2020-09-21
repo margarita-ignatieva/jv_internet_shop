@@ -18,8 +18,7 @@ public class ConnectionUtil {
         Properties dbProperties = new Properties();
         dbProperties.put("user","rita");
         dbProperties.put("password","root");
-        String dbUrl = "jdbc:mysql://localhost:3306";
-
+        String dbUrl = "jdbc:mysql://localhost:3306/your_schema_name?serverTimezone=UTC";
         try {
             return DriverManager.getConnection(dbUrl, dbProperties);
         } catch (SQLException e) {

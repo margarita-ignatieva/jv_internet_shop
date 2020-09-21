@@ -25,6 +25,9 @@ public class Application {
         final Product banana = new Product("banana", 10.1);
         final Product orange = new Product("orange", 4.1);
         final Product lemon = new Product("lemon", 6.3);
+        productDaoJdbcImpl.create(banana);
+        productDaoJdbcImpl.create(orange);
+        productDaoJdbcImpl.create(lemon);
 
         System.out.println("Before changes");
 

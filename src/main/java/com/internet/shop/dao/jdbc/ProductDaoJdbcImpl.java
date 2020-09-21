@@ -38,7 +38,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
     @Override
     public Optional<Product> get(Long id) {
         String query = "SELECT product_id, product_name, product_price"
-                + " WHERE product_id = ? AND deleted = 0";
+                + " WHERE product_id = ? AND deleted = 0;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
@@ -56,7 +56,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
     @Override
     public List<Product> getAll() {
         String query = "SELECT product_id, product_name, product_price"
-                + " FROM products WHERE deleted = 0";
+                + " FROM products WHERE deleted = 0;";
         List<Product> products = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -96,7 +96,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
             int i = statement.executeUpdate();
             return i == 1;
         } catch (SQLException e) {
-            throw new DataProcessingException("Removing product with id " + id + " is failed. ", e);
+            throw new DataProcessingException("Removing product with id " + id + " failed. ", e);
         }
     }
 
