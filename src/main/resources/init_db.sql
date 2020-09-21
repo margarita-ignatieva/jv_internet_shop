@@ -4,5 +4,5 @@ CREATE TABLE `internet_shop`.`products` (
     `product_id` BIGINT         NOT NULL AUTO_INCREMENT,
     `product_name` VARCHAR(225) NOT NULL,
     `product_price` DOUBLE      NOT NULL,
-    PRIMARY KEY (`product_id`),
-    UNIQUE INDEX `product_id_UNIQUE` (`product_id` ASC) VISIBLE);
+    `deleted` boolean NOT NULL DEFAULT false,
+    PRIMARY KEY (`product_id`));
