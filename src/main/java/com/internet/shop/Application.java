@@ -16,7 +16,8 @@ public class Application {
     private static final Injector injector = Injector.getInstance("com.internet.shop");
 
     public static void main(String[] args) {
-        final ProductDaoJdbcImpl productDaoJdbcImpl = new ProductDaoJdbcImpl();
+        final ProductDaoJdbcImpl productDaoJdbcImpl = (ProductDaoJdbcImpl)
+                injector.getInstance(ProductDaoJdbcImpl.class);
         final ShoppingCartService shoppingCartService =
                 (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
         final UserService userService = (UserService) injector.getInstance(UserService.class);
