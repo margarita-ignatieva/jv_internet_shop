@@ -5,7 +5,11 @@ import com.internet.shop.exceptions.DataProcessingException;
 import com.internet.shop.model.Order;
 import com.internet.shop.model.Product;
 import com.internet.shop.util.ConnectionUtil;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,15 +20,16 @@ public class OrderDaoJdbcImpl implements OrderDao {
     public List<Order> getUserOrders(Long userId) {
         List<Order> orders = new ArrayList<>();
         String query = "SELECT * FROM orders WHERE user_id = ?;";
-        try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 orders.add(getOrderFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new DataProcessingException("Failed to get orders of user with Id = " + userId, e);
+            throw new DataProcessingException("Failed to get orders of user with Id = "
+                    + userId, e);
         }
         for (Order order : orders) {
             order.setProducts(getProductsFromOrder(order.getId()));
@@ -55,7 +60,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
         Order order = null;
         String query = "SELECT * FROM orders WHERE order_id = ?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
-             PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -114,7 +119,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
         }
     }
 
-    private Order addProductsToOrder (Order order) {
+    private Order addProductsToOrder(Order order) {
         String query = "INSERT INTO order_products(order_id, user_id) VALUES (?, ?);";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -125,7 +130,8 @@ public class OrderDaoJdbcImpl implements OrderDao {
             }
             return order;
         } catch (SQLException e) {
-            throw new DataProcessingException("Failed to add products to order with Id = " + order.getId(), e);
+            throw new DataProcessingException("Failed to add products to order with Id = "
+                    + order.getId(), e);
         }
     }
 
