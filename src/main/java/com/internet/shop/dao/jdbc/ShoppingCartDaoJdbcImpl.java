@@ -26,7 +26,9 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return Optional.of(getCartFromResultSet(resultSet));
+                ShoppingCart shoppingCart = getCartFromResultSet(resultSet);
+                shoppingCart.setProducts(getProductsFromCart(shoppingCart.getId()));
+                return Optional.of(shoppingCart);
             }
             return Optional.empty();
         } catch (SQLException e) {
@@ -44,8 +46,8 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
     public ShoppingCart create(ShoppingCart shoppingCart) {
         String query = "INSERT INTO shopping_carts (user_id) VALUES (?)";
         try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection
-                    .prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement =
+                    connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setLong(1, shoppingCart.getUserId());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -119,7 +121,7 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
-            return statement.executeUpdate() != 0;
+            return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new DataProcessingException("Failed to delete cart with Id = " + id, e);
         }
@@ -162,9 +164,9 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
     }
 
     private List<Product> getProductsFromCart(Long cartId) {
-        String query = "SELECT * FROM products JOIN shopping_cart_products  "
-                + "ON shopping_cart_products.product_id = products.product_id "
-                + "WHERE shopping_cart_products.cart_id = ?;";
+        String query = "SELECT * FROM products p JOIN shopping_cart_products  scp "
+                + "ON scp.product_id = p.product_id "
+                + "WHERE scp.cart_id = ?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, cartId);

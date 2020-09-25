@@ -31,8 +31,11 @@ public class UserDaoJdbcImpl implements UserDao {
             ResultSet resultSet = statement.getGeneratedKeys();
             while (resultSet.next()) {
                 user = getUserFromResultSet(resultSet);
+                statement.close();
+                user.setRoles(getRoles(user.getUserId()));
+                return Optional.of(user);
             }
-            return Optional.of(user);
+            return Optional.empty();
         } catch (SQLException e) {
             throw new DataProcessingException("Failed to get user with login " + login, e);
         }
@@ -69,8 +72,11 @@ public class UserDaoJdbcImpl implements UserDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 user = getUserFromResultSet(resultSet);
+                statement.close();
+                user.setRoles(getRoles(user.getUserId()));
+                return Optional.of(user);
             }
-            return Optional.of(addRoles(user));
+            return Optional.empty();
         } catch (SQLException e) {
             throw new DataProcessingException("Failed to get the user with id: " + id, e);
         }
@@ -118,7 +124,7 @@ public class UserDaoJdbcImpl implements UserDao {
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
-            return statement.executeUpdate() == 1;
+            return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't delete user with Id = " + id, e);
         }
@@ -127,11 +133,10 @@ public class UserDaoJdbcImpl implements UserDao {
     private User addRoles(User user) {
         String query = "INSERT INTO user_roles(user_id, role_id) VALUES (?, ?);";
         try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query,
-                    Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(query);
             for (Role role : user.getRoles()) {
                 statement.setLong(1, user.getUserId());
-                statement.setString(2, role.getRoleName().name());
+                statement.setLong(2, role.getId());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -162,7 +167,7 @@ public class UserDaoJdbcImpl implements UserDao {
     }
 
     private boolean deleteRoles(Long userId) {
-        String query = "DELETE FROM roles WHERE user_id = ?;";
+        String query = "DELETE FROM user_roles WHERE user_id = ?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query,
                     Statement.RETURN_GENERATED_KEYS);
