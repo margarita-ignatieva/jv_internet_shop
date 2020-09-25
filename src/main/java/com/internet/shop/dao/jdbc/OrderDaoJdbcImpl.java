@@ -66,10 +66,11 @@ public class OrderDaoJdbcImpl implements OrderDao {
             while (resultSet.next()) {
                 order = getOrderFromResultSet(resultSet);
             }
-            order.setProducts(getProductsFromOrder(order.getId()));
+
         } catch (SQLException e) {
             throw new DataProcessingException("Can not get order from DB with ID = " + id, e);
         }
+        order.setProducts(getProductsFromOrder(order.getId()));
         return Optional.of(order);
     }
 
@@ -130,11 +131,11 @@ public class OrderDaoJdbcImpl implements OrderDao {
                 statement.setLong(2, product.getId());
                 statement.executeUpdate();
             }
-            return order;
         } catch (SQLException e) {
             throw new DataProcessingException("Failed to add products to order with Id = "
                     + order.getId(), e);
         }
+        return order;
     }
 
     private Order getOrderFromResultSet(ResultSet resultSet) throws SQLException {

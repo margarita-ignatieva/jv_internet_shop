@@ -32,13 +32,12 @@ public class UserDaoJdbcImpl implements UserDao {
             while (resultSet.next()) {
                 user = getUserFromResultSet(resultSet);
                 statement.close();
-                user.setRoles(getRoles(user.getUserId()));
-                return Optional.of(user);
             }
-            return Optional.empty();
         } catch (SQLException e) {
             throw new DataProcessingException("Failed to get user with login " + login, e);
         }
+        user.setRoles(getRoles(user.getUserId()));
+        return Optional.of(user);
     }
 
     @Override
@@ -55,11 +54,11 @@ public class UserDaoJdbcImpl implements UserDao {
             while (resultSet.next()) {
                 user.setUserId(resultSet.getLong(1));
             }
-            addRoles(user);
-            return user;
         } catch (SQLException e) {
             throw new DataProcessingException("Failed to add the user " + user.getName(), e);
         }
+        addRoles(user);
+        return user;
     }
 
     @Override
@@ -73,13 +72,12 @@ public class UserDaoJdbcImpl implements UserDao {
             while (resultSet.next()) {
                 user = getUserFromResultSet(resultSet);
                 statement.close();
-                user.setRoles(getRoles(user.getUserId()));
-                return Optional.of(user);
             }
-            return Optional.empty();
         } catch (SQLException e) {
             throw new DataProcessingException("Failed to get the user with id: " + id, e);
         }
+        user.setRoles(getRoles(user.getUserId()));
+        return Optional.of(user);
     }
 
     @Override
@@ -91,6 +89,11 @@ public class UserDaoJdbcImpl implements UserDao {
             List<User> users = new ArrayList<>();
             while (resultSet.next()) {
                 users.add(getUserFromResultSet(resultSet));
+            }
+            for (User user : users) {
+                Long id = user.getUserId();
+                Set<Role> roles = getRoles(id);
+                user.setRoles(roles);
             }
             return users;
         } catch (SQLException e) {

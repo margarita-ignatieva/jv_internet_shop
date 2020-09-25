@@ -19,6 +19,7 @@ import java.util.Optional;
 public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
     @Override
     public Optional<ShoppingCart> getByUserId(Long userId) {
+        ShoppingCart shoppingCart = null;
         String query = "SELECT * FROM shopping_carts "
                 + "WHERE user_id = ? AND deleted = false;";
         try (Connection connection = ConnectionUtil.getConnection();
@@ -26,15 +27,15 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                ShoppingCart shoppingCart = getCartFromResultSet(resultSet);
-                shoppingCart.setProducts(getProductsFromCart(shoppingCart.getId()));
-                return Optional.of(shoppingCart);
+                shoppingCart = getCartFromResultSet(resultSet);
+
             }
-            return Optional.empty();
         } catch (SQLException e) {
             throw new DataProcessingException("Failed to get cart of user with Id = "
                     + userId, e);
         }
+        shoppingCart.setProducts(getProductsFromCart(shoppingCart.getId()));
+        return Optional.of(shoppingCart);
     }
 
     @Override
@@ -54,10 +55,10 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             if (resultSet.next()) {
                 shoppingCart.setId(resultSet.getLong(1));
             }
-            return shoppingCart;
         } catch (SQLException e) {
             throw new DataProcessingException("Failed to create cart " + shoppingCart, e);
         }
+        return shoppingCart;
     }
 
     @Override
