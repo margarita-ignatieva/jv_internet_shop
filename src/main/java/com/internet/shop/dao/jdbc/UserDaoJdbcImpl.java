@@ -23,9 +23,9 @@ public class UserDaoJdbcImpl implements UserDao {
     public Optional<User> findByLogin(String login) {
         User user = null;
         String query = "SELECT * FROM users WHERE deleted = false AND user_login = ?;";
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query,
-                    Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query,
+                        Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, login);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -44,9 +44,9 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public User create(User user) {
         String query = "INSERT INTO users(user_name, user_login, user_password) VALUES (?, ?, ?);";
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query,
-                    Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query,
+                        Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getLogin());
             statement.setString(3, user.getPassword());
@@ -66,8 +66,8 @@ public class UserDaoJdbcImpl implements UserDao {
     public Optional<User> get(Long id) {
         User user = null;
         String query = "SELECT * FROM users WHERE deleted = false AND user_id = ?";
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -85,8 +85,8 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public List<User> getAll() {
         String query = "SELECT * FROM users WHERE deleted = false";
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             List<User> users = new ArrayList<>();
             while (resultSet.next()) {
@@ -103,8 +103,8 @@ public class UserDaoJdbcImpl implements UserDao {
         String query = "UPDATE users SET user_name = ?, user_login = ?, user_password = ? "
                 + "WHERE user_id = ? "
                 + "AND deleted = false";
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getLogin());
             statement.setString(3, user.getPassword());
@@ -121,8 +121,8 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public boolean delete(Long id) {
         String query = "UPDATE users SET deleted = true WHERE user_id = ?";
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -132,8 +132,8 @@ public class UserDaoJdbcImpl implements UserDao {
 
     private User addRoles(User user) {
         String query = "INSERT INTO user_roles(user_id, role_id) VALUES (?, ?);";
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             for (Role role : user.getRoles()) {
                 statement.setLong(1, user.getUserId());
                 statement.setLong(2, role.getId());
@@ -150,9 +150,9 @@ public class UserDaoJdbcImpl implements UserDao {
     private Set<Role> getRoles(Long userId) {
         String query = "SELECT roles.role_id, role_name FROM roles JOIN user_roles"
                                + "ON user_roles.role_id = roles.role_id WHERE user_id = ?;";
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query,
-                    Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query,
+                        Statement.RETURN_GENERATED_KEYS)) {
             statement.setLong(1, userId);
             ResultSet resultSet = statement.getGeneratedKeys();
             Set<Role> roles = new HashSet<>();
@@ -168,9 +168,9 @@ public class UserDaoJdbcImpl implements UserDao {
 
     private boolean deleteRoles(Long userId) {
         String query = "DELETE FROM user_roles WHERE user_id = ?;";
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query,
-                    Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query,
+                        Statement.RETURN_GENERATED_KEYS)) {
             statement.setLong(1, userId);
             return statement.executeUpdate() == 1;
         } catch (SQLException e) {
