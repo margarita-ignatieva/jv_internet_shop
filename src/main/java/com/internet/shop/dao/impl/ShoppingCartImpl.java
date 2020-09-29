@@ -1,14 +1,12 @@
 package com.internet.shop.dao.impl;
 
 import com.internet.shop.dao.interfaces.ShoppingCartDao;
-import com.internet.shop.library.Dao;
 import com.internet.shop.model.ShoppingCart;
 import com.internet.shop.storage.Storage;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-@Dao
 public class ShoppingCartImpl implements ShoppingCartDao {
 
     @Override

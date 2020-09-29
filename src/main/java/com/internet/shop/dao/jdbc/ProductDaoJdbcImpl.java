@@ -24,7 +24,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
                     Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, product.getName());
             statement.setDouble(2, product.getPrice());
-            statement.execute();
+            statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             while (resultSet.next()) {
                 product.setId(resultSet.getLong(1));
