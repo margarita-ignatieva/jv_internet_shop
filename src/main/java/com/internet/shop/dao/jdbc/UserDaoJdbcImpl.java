@@ -36,7 +36,7 @@ public class UserDaoJdbcImpl implements UserDao {
         } catch (SQLException e) {
             throw new DataProcessingException("Failed to get user with login " + login, e);
         }
-        if (user.getRoles() != null) {
+        if (getRoles(user.getUserId()) != null) {
             user.setRoles(getRoles(user.getUserId()));
         }
         return Optional.of(user);
@@ -78,7 +78,7 @@ public class UserDaoJdbcImpl implements UserDao {
         } catch (SQLException e) {
             throw new DataProcessingException("Failed to get the user with id: " + id, e);
         }
-        if (user.getRoles() != null) {
+        if (getRoles(user.getUserId()) != null) {
             user.setRoles(getRoles(user.getUserId()));
         }
         return Optional.of(user);

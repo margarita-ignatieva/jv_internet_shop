@@ -34,7 +34,7 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             throw new DataProcessingException("Failed to get cart of user with Id = "
                     + userId, e);
         }
-        if (shoppingCart.getProducts() != null) {
+        if (getProductsFromCart(shoppingCart.getId()) != null) {
             shoppingCart.setProducts(getProductsFromCart(shoppingCart.getId()));
         }
         return Optional.of(shoppingCart);
