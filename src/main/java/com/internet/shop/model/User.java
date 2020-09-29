@@ -21,10 +21,9 @@ public class User {
     }
 
     public User(Long userId, String name, String login, String password, Set<Role> roles) {
+        this(login, password);
         this.userId = userId;
         this.name = name;
-        this.login = login;
-        this.password = password;
         this.roles = roles;
     }
 
