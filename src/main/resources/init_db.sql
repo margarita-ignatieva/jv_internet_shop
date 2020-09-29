@@ -12,6 +12,7 @@ CREATE TABLE `internet_shop`.`users` (
     `user_name` VARCHAR(255) NOT NULL,
     `user_login` VARCHAR(255) NOT NULL,
     `user_password` VARCHAR(255) NULL,
+    `salt` BINARY(16) NOT NULL,
     `deleted` TINYINT NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
     UNIQUE (login)
