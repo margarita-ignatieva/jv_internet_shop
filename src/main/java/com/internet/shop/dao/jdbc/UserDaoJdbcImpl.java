@@ -44,13 +44,15 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public User create(User user) {
-        String query = "INSERT INTO users(user_name, user_login, user_password) VALUES (?, ?, ?);";
+        String query = "INSERT INTO users(user_name, user_login, user_password, salt) "
+                + "VALUES (?, ?, ?, ?);";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query,
                         Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getLogin());
             statement.setString(3, user.getPassword());
+            statement.setBytes(4, user.getSalt());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             while (resultSet.next()) {
@@ -107,7 +109,7 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public User update(User user) {
-        String query = "UPDATE users SET user_name = ?, user_login = ?, user_password = ? "
+        String query = "UPDATE users SET user_name = ?, user_login = ?, user_password = ?, salt = ?"
                 + "WHERE user_id = ? "
                 + "AND deleted = false";
         try (Connection connection = ConnectionUtil.getConnection();
@@ -115,6 +117,7 @@ public class UserDaoJdbcImpl implements UserDao {
             statement.setString(1, user.getName());
             statement.setString(2, user.getLogin());
             statement.setString(3, user.getPassword());
+            statement.setBytes(4, user.getSalt());
             statement.setLong(4, user.getUserId());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -191,6 +194,7 @@ public class UserDaoJdbcImpl implements UserDao {
         String name = resultSet.getString("user_name");
         String login = resultSet.getString("user_login");
         String password = resultSet.getString("user_password");
+        byte[] salt = resultSet.getBytes("salt");
         Set<Role> roles = new HashSet<>();
         return new User(id, name, login, password, roles);
     }
