@@ -6,7 +6,7 @@
 + roles : admin, user
  ### Technologies used
 + Web: Tomcat, Java Servlets, JSP
-+ Dtabase: MySQL, JDBS
++ Database: MySQL, JDBS
 + Maven 
 + IntelliJ IDEA
  ### Security implementation
